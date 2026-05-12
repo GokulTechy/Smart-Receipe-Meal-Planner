@@ -61,8 +61,15 @@ export default function AddRecipe() {
             <input type="text" className="input-field" required value={title} onChange={e => setTitle(e.target.value)} />
           </div>
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Image URL (Optional)</label>
-            <input type="text" className="input-field" value={image} onChange={e => setImage(e.target.value)} />
+            <label style={{ display: 'block', marginBottom: '5px' }}>Upload Image</label>
+            <input type="file" className="input-field" accept="image/*" onChange={e => {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => setImage(reader.result);
+                reader.readAsDataURL(file);
+              }
+            }} />
           </div>
           <div style={{ display: 'flex', gap: '15px', marginBottom: '15px' }}>
             <div style={{ flex: 1 }}>

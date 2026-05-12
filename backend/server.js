@@ -15,8 +15,143 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/nutrichef',
   dbName: process.env.DB_NAME || 'smart_recipe_db',
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log('Connected to MongoDB via Mongoose!'))
+}).then(async () => {
+  console.log('Connected to MongoDB via Mongoose!');
+  // Automatic Seeding
+  const count = await Recipe.countDocuments();
+  if (count === 0) {
+    console.log('Database is empty. Seeding initial recipes...');
+    await Recipe.insertMany(seedRecipes);
+    console.log('Initial recipes seeded successfully!');
+  }
+})
   .catch(err => console.error('MongoDB connection error:', err));
+
+const seedRecipes = [
+  {
+    title: 'Tomato Rice',
+    image: 'https://images.unsplash.com/photo-1626082896492-766af4eb6501?w=500&auto=format&fit=crop&q=60',
+    prepTime: '10 mins',
+    cookTime: '20 mins',
+    calories: 320,
+    nutrition: { protein: '5g', carbs: '65g', fat: '8g' },
+    ingredients: [
+      { name: 'Basmati Rice', amount: '1 cup' },
+      { name: 'Tomatoes', amount: '3 medium' },
+      { name: 'Onion', amount: '1 large' },
+      { name: 'Spices', amount: 'to taste' }
+    ],
+    steps: [
+      'Cook the rice and set aside.',
+      'Heat oil in a pan, sauté onions and tomatoes.',
+      'Add spices and cook until soft.',
+      'Mix in the rice gently and serve.'
+    ],
+    comments: [],
+    author: 'Admin'
+  },
+  {
+    title: 'Cheese Omelette Sandwich',
+    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop&q=60',
+    prepTime: '5 mins',
+    cookTime: '5 mins',
+    calories: 450,
+    nutrition: { protein: '20g', carbs: '35g', fat: '25g' },
+    ingredients: [
+      { name: 'Bread', amount: '2 slices' },
+      { name: 'Eggs', amount: '2' },
+      { name: 'Cheese', amount: '1 slice' },
+      { name: 'Butter', amount: '1 tbsp' }
+    ],
+    steps: [
+      'Beat the eggs and cook in a buttery pan.',
+      'Add cheese and fold the omelette.',
+      'Place between toasted bread slices.'
+    ],
+    comments: [],
+    author: 'Admin'
+  },
+  {
+    title: 'Vegetable Pulao',
+    image: 'https://images.unsplash.com/photo-1512058560566-d8b44ad957d6?w=500&auto=format&fit=crop&q=60',
+    prepTime: '15 mins',
+    cookTime: '25 mins',
+    calories: 380,
+    nutrition: { protein: '8g', carbs: '70g', fat: '10g' },
+    ingredients: [
+      { name: 'Rice', amount: '1 cup' },
+      { name: 'Mixed Veggies', amount: '1 cup' },
+      { name: 'Whole Spices', amount: 'to taste' }
+    ],
+    steps: [
+      'Sauté spices and vegetables in a pan.',
+      'Add washed rice and water.',
+      'Pressure cook or cook until fluffy.'
+    ],
+    comments: [],
+    author: 'Admin'
+  },
+  {
+    title: 'Lemon Rice',
+    image: 'https://images.unsplash.com/photo-1546833998-877b37c2e5c6?w=500&auto=format&fit=crop&q=60',
+    prepTime: '5 mins',
+    cookTime: '15 mins',
+    calories: 280,
+    nutrition: { protein: '4g', carbs: '55g', fat: '6g' },
+    ingredients: [
+      { name: 'Cooked Rice', amount: '2 cups' },
+      { name: 'Lemon', amount: '1 large' },
+      { name: 'Peanuts', amount: '2 tbsp' },
+      { name: 'Turmeric', amount: '1/2 tsp' }
+    ],
+    steps: [
+      'Heat oil and roast peanuts and spices.',
+      'Add lemon juice and turmeric.',
+      'Mix in the cooked rice thoroughly.'
+    ],
+    comments: [],
+    author: 'Admin'
+  },
+  {
+    title: 'Idli Sambar',
+    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop&q=60',
+    prepTime: '8 hrs',
+    cookTime: '30 mins',
+    calories: 220,
+    nutrition: { protein: '10g', carbs: '40g', fat: '2g' },
+    ingredients: [
+      { name: 'Idli Batter', amount: '2 cups' },
+      { name: 'Toor Dal', amount: '1/2 cup' },
+      { name: 'Sambar Powder', amount: '2 tbsp' }
+    ],
+    steps: [
+      'Steam the idlis in a mold.',
+      'Cook dal and vegetables for sambar.',
+      'Mix and serve hot.'
+    ],
+    comments: [],
+    author: 'Admin'
+  },
+  {
+    title: 'Vegetable Soup',
+    image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=500&auto=format&fit=crop&q=60',
+    prepTime: '10 mins',
+    cookTime: '20 mins',
+    calories: 150,
+    nutrition: { protein: '3g', carbs: '25g', fat: '2g' },
+    ingredients: [
+      { name: 'Mixed Veggies', amount: '2 cups' },
+      { name: 'Broth', amount: '3 cups' }
+    ],
+    steps: [
+      'Sauté veggies and add broth.',
+      'Simmer until tender.',
+      'Season and serve.'
+    ],
+    comments: [],
+    author: 'Admin'
+  }
+];
 
 // --- MONGOOSE MODELS ---
 const userSchema = new mongoose.Schema({
