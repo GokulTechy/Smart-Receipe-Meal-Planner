@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Clock, Flame, Info, CheckCircle, MessageSquare, Heart, ShoppingCart, Edit, Trash2 } from 'lucide-react';
+import API_URL from '../api';
+
 import { motion } from 'framer-motion';
 
 export default function RecipeDetail() {
@@ -36,7 +38,8 @@ export default function RecipeDetail() {
 
   const fetchRecipe = async () => {
     try {
-      const res = await axios.get(`http://localhost:5001/api/recipes/${id}`);
+      const res = await axios.get(`${API_URL}/api/recipes/${id}`);
+
       setRecipe(res.data);
     } catch (err) {
       console.error(err);
@@ -46,7 +49,8 @@ export default function RecipeDetail() {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this recipe?')) {
       try {
-        await axios.delete(`http://localhost:5001/api/recipes/${id}`);
+        await axios.delete(`${API_URL}/api/recipes/${id}`);
+
         navigate('/');
       } catch (err) {
         console.error(err);
@@ -59,7 +63,8 @@ export default function RecipeDetail() {
     e.preventDefault();
     if (!comment) return;
     try {
-      const res = await axios.post(`http://localhost:5001/api/recipes/${id}/comments`, {
+      const res = await axios.post(`${API_URL}/api/recipes/${id}/comments`, {
+
         user: 'Guest User',
         text: comment
       });
@@ -73,7 +78,8 @@ export default function RecipeDetail() {
   const getSubstitution = async (ingredient) => {
     setSubmittingIng(ingredient);
     try {
-      const res = await axios.post('http://localhost:5001/api/substitute', { ingredient });
+      const res = await axios.post(`${API_URL}/api/substitute`, { ingredient });
+
       setSubstitution({ [ingredient]: res.data.substitute });
     } catch (err) {
       console.error(err);

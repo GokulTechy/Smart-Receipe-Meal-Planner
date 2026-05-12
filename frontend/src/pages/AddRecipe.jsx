@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../api';
+
 
 export default function AddRecipe() {
   const [title, setTitle] = useState('');
@@ -40,7 +42,8 @@ export default function AddRecipe() {
     };
 
     try {
-      await axios.post('http://localhost:5001/api/recipes', newRecipe);
+      await axios.post(`${API_URL}/api/recipes`, newRecipe);
+
       navigate('/');
     } catch (err) {
       console.error(err);

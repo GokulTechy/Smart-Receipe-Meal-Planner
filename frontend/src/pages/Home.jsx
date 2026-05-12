@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Search, Clock, Flame } from 'lucide-react';
+import API_URL from '../api';
+
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -14,7 +16,8 @@ export default function Home() {
 
   const fetchRecipes = async () => {
     try {
-      const res = await axios.get(`http://localhost:5001/api/recipes${search ? `?query=${search}` : ''}`);
+      const res = await axios.get(`${API_URL}/api/recipes${search ? `?query=${search}` : ''}`);
+
       setRecipes(res.data);
     } catch (err) {
       console.error(err);

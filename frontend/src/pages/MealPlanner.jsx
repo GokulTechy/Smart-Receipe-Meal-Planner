@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import axios from 'axios';
 import { Calendar } from 'lucide-react';
+import API_URL from '../api';
+
 import { motion } from 'framer-motion';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -19,8 +21,9 @@ export default function MealPlanner() {
   const fetchData = async () => {
     try {
       const [recipesRes, planRes] = await Promise.all([
-        axios.get('http://localhost:5001/api/recipes'),
-        axios.get('http://localhost:5001/api/meal-plan')
+        axios.get(`${API_URL}/api/recipes`),
+        axios.get(`${API_URL}/api/meal-plan`)
+
       ]);
       setRecipes(recipesRes.data);
       setMealPlan(planRes.data);
@@ -36,7 +39,8 @@ export default function MealPlanner() {
     if (source.droppableId === 'recipe-list' && destination.droppableId !== 'recipe-list') {
       const day = destination.droppableId;
       try {
-        const res = await axios.post('http://localhost:5001/api/meal-plan', { day, recipeId: draggableId });
+        const res = await axios.post(`${API_URL}/api/meal-plan`, { day, recipeId: draggableId });
+
         setMealPlan(res.data);
       } catch (err) {
         console.error(err);
@@ -48,7 +52,8 @@ export default function MealPlanner() {
 
   const removeMeal = async (day, itemId) => {
     try {
-      const res = await axios.delete(`http://localhost:5001/api/meal-plan/${day}/${itemId}`);
+      const res = await axios.delete(`${API_URL}/api/meal-plan/${day}/${itemId}`);
+
       setMealPlan(res.data);
     } catch (err) {
       console.error(err);
