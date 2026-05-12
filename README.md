@@ -1,6 +1,6 @@
 # Smart Recipe & Meal Planner
 
-This is a modern web application designed to support cooking and healthy eating with recipe search, meal planning, ingredient-based suggestions, and nutrition tracking. It supports SDG-2 (Zero Hunger) 
+This is a modern web application designed to support cooking and healthy eating with recipe search, meal planning, ingredient-based suggestions, and nutrition tracking. 
 
 
 
